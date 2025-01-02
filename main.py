@@ -20,10 +20,16 @@ class Config:
         credential = InteractiveBrowserCredential(tenant_id=self.az_tenant_id)
         user_token = credential.get_token(*scope).token
 
+        with open("temp/token.txt", "w") as f:
+            f.write(user_token)
+
         self.user_headers = {"Authorization": f"Bearer {user_token}"}
 
     def set_repo_local_path(self, path):
         self.repo_local_path = path
+
+    def set_user_headers(self, headers):
+        self.user_headers = headers
 
 class Workspace:
     def __init__(self, config: Config):
@@ -75,21 +81,34 @@ class Workspace:
 if __name__ == "__main__":
 
 
-    config = Config()
-    with tempfile.TemporaryDirectory() as temp_dir:
-        config.set_repo_local_path(temp_dir)
-        print(f"Cloning repository to temporary directory: {temp_dir}")
-        command = f"git clone {config.repo_remote_url} {temp_dir}"
-        os.system(command)
+    use_local = True
 
-        ws = Workspace(config)
+    config = Config()
+
+    if use_local:
+        config.set_repo_local_path("temp/repo/fabric-dbt-workspace")
+        print("using local repo temp/repo/fabric-dbt-workspace")
+
+        # TODO: remove magic path
+        with open("temp/token.txt", "r") as f: 
+            # TODO: check for existence and validity of token
+            user_token = f.read()
+            config.set_user_headers = {"Authorization": f"Bearer {user_token}"}
+            ws = Workspace(config)
+
+    else: 
+        with tempfile.TemporaryDirectory() as temp_dir:
+            config.set_repo_local_path(temp_dir)
+            print(f"Cloning repository to temporary directory: {temp_dir}")
+            command = f"git clone {config.repo_remote_url} {temp_dir}"
+            os.system(command)
+            ws = Workspace(config)
 
         
 
-        ws.run_source_checks()
-
-        diff = ws.get_diff()
-        print(diff)
+    ws.run_source_checks()
+    diff = ws.get_diff()
+    print(diff)
 
 
 
