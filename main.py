@@ -2,18 +2,18 @@ from azure.identity import InteractiveBrowserCredential
 import requests
 import tomllib
 import json
+import sys
+import os
+import tempfile
 from pathlib import Path
 
 class Config:
     def __init__(self):
-        with open("config/auth.toml", "rb") as f:
-            auth_config = tomllib.load(f)
-            self.az_tenant_id = auth_config.get('az_tenant_id')
-
         with open("config/deploy.toml", "rb") as f:
             deploy_config = tomllib.load(f)
             self.target_workspace_id = deploy_config.get("target").get("workspace_id")
-            self.repo_local_path = deploy_config.get("repo_local_path")
+            self.repo_remote_url = deploy_config.get("repo_remote_url")
+            self.az_tenant_id = deploy_config.get('az_tenant_id')
 
         scope = ['https://analysis.windows.net/powerbi/api/.default']
 
@@ -21,6 +21,9 @@ class Config:
         user_token = credential.get_token(*scope).token
 
         self.user_headers = {"Authorization": f"Bearer {user_token}"}
+
+    def set_repo_local_path(self, path):
+        self.repo_local_path = path
 
 class Workspace:
     def __init__(self, config: Config):
@@ -62,17 +65,31 @@ class Workspace:
         diff['lakehouse']['dangling'] = dangling_lh_names
 
         return diff
-
-
+    
+    def run_source_checks(self):
+        default_lakehouse = next((obj for obj in self.items_git if obj.get("displayName") == "z_default_lakehouse" and obj.get("type") == "Lakehouse"), None)
+        if not default_lakehouse:
+            print("ERROR: no z_default_lakehouse in source")
+            sys.exit(1)
 
 if __name__ == "__main__":
 
+
     config = Config()
-    ws = Workspace(config)
+    with tempfile.TemporaryDirectory() as temp_dir:
+        config.set_repo_local_path(temp_dir)
+        print(f"Cloning repository to temporary directory: {temp_dir}")
+        command = f"git clone {config.repo_remote_url} {temp_dir}"
+        os.system(command)
 
-    diff = ws.get_diff()
+        ws = Workspace(config)
 
-    print(diff)
+        
+
+        ws.run_source_checks()
+
+        diff = ws.get_diff()
+        print(diff)
 
 
 
