@@ -1,0 +1,16 @@
+[tool.poetry]
+name = "fabric-cicd"
+version = "0.1.0"
+description = ""
+authors = ["sklempna <60576241+sklempna@users.noreply.github.com>"]
+readme = "README.md"
+packages = [{include = "fabric_cicd"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+azure-identity = "^1.19.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
