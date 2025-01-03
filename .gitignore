@@ -1,2 +1,3 @@
 config/deploy.toml
 temp
+__pycache__
