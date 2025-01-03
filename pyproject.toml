@@ -9,6 +9,7 @@ packages = [{include = "fabric_cicd"}]
 [tool.poetry.dependencies]
 python = "^3.11"
 azure-identity = "^1.19.0"
+prompt-toolkit = "^3.0.48"
 
 
 [build-system]

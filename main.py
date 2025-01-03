@@ -7,22 +7,15 @@ from deployment import Workspace
 
 
 if __name__ == "__main__":
-    use_local = True 
 
-    config = Config(use_local)
+    use_local_repo = True 
 
-    if use_local:
+    config = Config()
+
+    if use_local_repo:
         config.set_repo_local_path(Path("temp/repo/fabric-dbt-workspace"))
         print("using local repo temp/repo/fabric-dbt-workspace")
-
-        # TODO: remove magic path
-        with open("temp/token.txt", "r") as f: 
-            # TODO: check for existence and validity of token
-            user_token = f.read()
-            config.set_user_token(user_token)
-            config.set_user_headers({"Authorization": f"Bearer {user_token}"})
-            ws = Workspace(config)
-
+        ws = Workspace(config)
     else: 
         with tempfile.TemporaryDirectory() as temp_dir:
             config.set_repo_local_path(Path(temp_dir))
