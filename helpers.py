@@ -3,8 +3,17 @@ import requests
 import json
 import base64
 import hashlib
+import os
+import platform
 
 # helpers 
+
+def clear_terminal():
+    # Check the operating system and run the appropriate clear command
+    if platform.system() == "Windows":
+        os.system("cls")  # Windows command to clear the terminal
+    else:
+        os.system("clear")  # Unix-based systems (Linux/Mac) command to clear the terminal
 
 def compute_md5_hash(file_path):
     """

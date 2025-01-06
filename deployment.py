@@ -1,15 +1,17 @@
-from azure.identity import InteractiveBrowserCredential
 import requests
 import json
 import base64
 import sys
 from pathlib import Path
+from prompt_toolkit import print_formatted_text as print
+from prompt_toolkit import HTML
 
 from config import Config
+from anytree import Node, RenderTree
 import helpers
 
 
-class Workspace:
+class Deployment:
     def __init__(self, config: Config):
         """
         Connects to the target workspace and obtains the git and workspace items.
@@ -24,6 +26,8 @@ class Workspace:
         self.mapping['workspace'] = {self.config.source_workspace_id : self.config.target_workspace_id}
         self.mapping['lakehouse'] = {}
         self.lakehouse_mapping_is_current = False
+        self.items_tgt = self._get_items_tgt()
+        self.items_git = self._get_items_git()
 
     def _update_default_lakehouse_mapping(self):
         """
@@ -80,8 +84,6 @@ class Workspace:
         return lh
     
     def compute_plan(self):
-        self.items_tgt = self._get_items_tgt()
-        self.items_git = self._get_items_git()
         self.run_source_checks()
         self.diff = self._get_diff()
         self.plan_is_current = True
@@ -91,20 +93,37 @@ class Workspace:
         if not self.plan_is_current:
             print("run plan first")
             return
+        node_root = Node("Deployment")
+        node_lh = Node("Lakehouses", parent=node_root)
+        node_lh_new = Node("New", parent=node_lh)
+        node_lh_ignore = Node("Ignore", parent=node_lh)
+        node_lh_delete = Node("Delete", parent=node_lh)
+
+        node_nb = Node("Notebooks", parent=node_root)
+        node_nb_new = Node("New", parent=node_nb)
+        node_nb_update = Node("Update - not supported yet", parent=node_nb)
+        node_nb_delete = Node("Delete - not supported yet", parent=node_nb)
+
 
         for new_lh in self.diff['lakehouse']['new']:
-            print(f"create lakehouse {new_lh}") 
+            Node(new_lh, parent=node_lh_new)
         for ignore_lh in self.diff['lakehouse']['ignore']:
-            print(f"ignore lakehouse {ignore_lh}") 
+            Node(ignore_lh, parent=node_lh_ignore)
         for dangling_lh in self.diff['lakehouse']['dangling']:
-            print(f"delete lakehouse {dangling_lh}") 
+            Node(dangling_lh, parent=node_lh_delete)
 
         for new_nb in self.diff['notebook']['new']:
-            print(f"create notebook {new_nb}") 
+            Node(new_nb, parent=node_nb_new)
         for update_nb in self.diff['notebook']['update']:
-            print(f"update notebook {update_nb} -- not supported yet") 
+            Node(update_nb, parent=node_nb_update)
         for dangling_nb in self.diff['notebook']['dangling']:
-            print(f"delete notebook {dangling_nb} -- not supported yet") 
+            Node(dangling_nb, parent=node_nb_delete)
+
+        print("\nHere is your deployment tree:\n")
+        for pre, fill, node in RenderTree(node_root):
+            print(f"{pre}{node.name}")
+
+        print("")
 
     def run(self):
         if not self.plan_is_current:
@@ -169,16 +188,16 @@ class Workspace:
         return diff
     
     def run_source_checks(self):
-        print("Running source checks.")
+        print("\n...Running source checks.")
         default_lakehouse = next((obj for obj in self.items_git if obj.get("displayName") == "z_default_lakehouse" and obj.get("type") == "Lakehouse"), None)
         if not default_lakehouse:
             print("ERROR: no z_default_lakehouse in source")
             sys.exit(1)
-        print("TEST: source contains a z_default_lakehouse -> PASSED")
+        print("......TEST: source contains a z_default_lakehouse -> PASSED")
         
         # TODO: notebooks should only be connected to lakehouses in their own workspace.
 
-        print("All source checks passed.")
+        print("...All source checks passed.")
 
     def create_notebook_from_local_repo(self, display_name, folder_path: Path):
         if not self.lakehouse_mapping_is_current:

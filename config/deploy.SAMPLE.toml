@@ -3,3 +3,4 @@ az_tenant_id = ""
 repo_remote_url = "https://stefanklempDNA@dev.azure.com/stefanklempDNA/fabric-dbt-demo/_git/fabric-dbt-workspace"
 
 target.workspace_id = ""
+source.workspace_id = ""
