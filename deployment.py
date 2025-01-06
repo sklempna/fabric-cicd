@@ -126,6 +126,7 @@ class Deployment:
         print("")
 
     def run(self):
+        print("")
         if not self.plan_is_current:
             print("run plan first")
             return
@@ -133,12 +134,12 @@ class Deployment:
         # create new lakehouses
         for new_lh in self.diff['lakehouse']['new']:
             item_definition = self.get_lakehouse_git_definition(new_lh)
-            print(f"creating lakehouse {new_lh}") 
+            print(f"...Creating Lakehouse {new_lh}") 
             helpers.create_lakehouse(self.config.user_headers, self.config.target_workspace_id, item_definition)
 
         # delete dangling lakehouses
         for del_lh in self.diff['lakehouse']['dangling']:
-            print(f"deleting lakehouse {del_lh}")
+            print(f"...Deleting Lakehouse {del_lh}")
             id = helpers.get_lakehouse_id(self.config.user_headers, self.config.target_workspace_id, del_lh)
             helpers.delete_lakehouse(self.config.user_headers, self.config.target_workspace_id, id)
 
@@ -147,10 +148,10 @@ class Deployment:
 
         # create new notebooks
         for new_nb in self.diff['notebook']['new']:
-            print(f"creating notebook {new_nb}")
+            print(f"...Creating Notebook {new_nb}")
             self.create_notebook_from_local_repo(new_nb, self.config.repo_local_path / (new_nb + '.Notebook'))
 
-
+        print("...All done.")
     
     def _get_diff(self):
         """
@@ -212,13 +213,13 @@ class Deployment:
         # switch workspace ids
         for ws_src in self.mapping.get('workspace').keys():
             ws_tgt = self.mapping.get('workspace').get(ws_src)
-            print(f"changing workspace {ws_src} for {ws_tgt}")
+            print(f"......Changing workspace {ws_src} for {ws_tgt}")
             nb_content_string = nb_content_string.replace(ws_src, ws_tgt)
 
         # switch lakehouse ids
         for lh_src in self.mapping.get('lakehouse').keys():
             lh_tgt = self.mapping.get('lakehouse').get(lh_src)
-            print(f"changing lakehouse {lh_src} for {lh_tgt}")
+            print(f"......Changing lakehouse {lh_src} for {lh_tgt}")
             nb_content_string = nb_content_string.replace(lh_src, lh_tgt)
 
         nb_content_bytes = nb_content_string.encode('utf-8')

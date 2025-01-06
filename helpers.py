@@ -5,6 +5,9 @@ import base64
 import hashlib
 import os
 import platform
+import sys
+from prompt_toolkit import print_formatted_text as print
+from prompt_toolkit import HTML
 
 # helpers 
 
@@ -65,7 +68,12 @@ def base64_encode_file(file_path):
 def create_lakehouse(auth_header, workspace_id, item_definition):
     url = f'https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/lakehouses'
     r = requests.post(url, headers=auth_header, data=item_definition)
-    return json.loads(r.text).get("value")
+    if r.status_code != 201:
+        print(HTML("<ansired><b>ERROR:</b> could not create lakehouse.</ansired>"))
+        print(r.text)
+        print(r.status_code)
+        sys.exit(1)
+    return r.status_code
 
 
 def get_lakehouse_id(auth_header, workspace_id, display_name):
@@ -74,11 +82,16 @@ def get_lakehouse_id(auth_header, workspace_id, display_name):
     values = json.loads(r.text).get("value")
     lh = next((item for item in values if item['type'] == 'Lakehouse' and item['displayName'] == display_name), None)
     if not lh:
-        print(f'No lakehouse with display_name {display_name} found in workspace {workspace_id}')
-        return
+        print(HTML(f'<ansired><b>ERROR:</b> No lakehouse with display_name {display_name} found in workspace {workspace_id}</ansired>'))
+        sys.exit(1)
     return lh['id']
 
 def delete_lakehouse(auth_header, workspace_id, lakehouse_id):
     url = f'https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/lakehouses/{lakehouse_id}'
     r = requests.delete(url, headers=auth_header)
-    return 
+    if r.status_code != 201:
+        print(HTML("<ansired><b>ERROR:</b> could not delete lakehouse.</ansired>"))
+        print(r.text)
+        print(r.status_code)
+        sys.exit(1)
+    return r.status_code
