@@ -70,6 +70,14 @@ def main():
         config.set_repo_local_path(Path("temp/repo/fabric-workspace"))
         print("...Using local repo temp/repo/fabric-workspace")
         dep = Deployment(config)
+        app._run_or_exit("Run preview deployment? (Type 'yes' or 'no'): ")
+
+        dep.compute_plan()
+        dep.print_plan()
+
+        app._run_or_exit("Run deployment? (Type 'yes' or 'no'): ")
+
+        dep.run()
     else: 
         with tempfile.TemporaryDirectory() as temp_dir:
             config.set_repo_local_path(Path(temp_dir))
@@ -78,14 +86,14 @@ def main():
             os.system(command)
             dep = Deployment(config)
     
-    app._run_or_exit("Run preview deployment? (Type 'yes' or 'no'): ")
+            app._run_or_exit("Run preview deployment? (Type 'yes' or 'no'): ")
 
-    dep.compute_plan()
-    dep.print_plan()
+            dep.compute_plan()
+            dep.print_plan()
 
-    app._run_or_exit("Run deployment? (Type 'yes' or 'no'): ")
+            app._run_or_exit("Run deployment? (Type 'yes' or 'no'): ")
 
-    dep.run()
+            dep.run()
 
 
     
