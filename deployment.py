@@ -8,7 +8,7 @@ from prompt_toolkit import HTML
 
 from config import Config
 from anytree import Node, RenderTree
-from helpers.fabric import get_lakehouse_id, create_lakehouse, get_lakehouse_id, delete_lakehouse
+from helpers.fabric import get_lakehouse_id, create_lakehouse, get_lakehouse_id, delete_lakehouse, create_notebook
 from helpers.general import compute_md5_hash
 
 
@@ -203,7 +203,7 @@ class Deployment:
 
     def create_notebook_from_local_repo(self, display_name, folder_path: Path):
         if not self.lakehouse_mapping_is_current:
-            print("ERROR: update the lakehouse mapping before createing notebooks")
+            print("ERROR: update the lakehouse mapping before creating notebooks")
             return 
         
         url = f'https://api.fabric.microsoft.com/v1/workspaces/{self.config.target_workspace_id}/items'
@@ -226,22 +226,7 @@ class Deployment:
         nb_content_bytes = nb_content_string.encode('utf-8')
         nb_content_b64 = base64.b64encode(nb_content_bytes).decode('utf-8')
 
-        # encoded_nb_content = base64_encode_file(folder_path / 'notebook-content.py')
-        payload = {
-            "displayName": display_name,
-            "type": "Notebook",
-            "definition": {
-                "format": "fabricGitSource",
-                "parts": [
-                    {
-                        "path": "notebook-content.py",
-                        "payload": nb_content_b64,
-                        "payloadType": "InlineBase64"
-                    }
-                ]
-            }
-        }
-        # print(payload)
-        r = requests.post(url, headers=self.config.user_headers, json=payload)
-        return r.status_code
+        status_code = create_notebook(self.config.user_headers, self.config.target_workspace_id, display_name, nb_content_b64)
+        
+        return status_code
     

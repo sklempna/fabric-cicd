@@ -14,3 +14,7 @@ Runs with
 poetry run python main.py
 ```
 
+
+# Code structure
+
+![code structure](./documentation/code_structure.png)
