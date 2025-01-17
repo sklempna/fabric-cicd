@@ -7,16 +7,17 @@ from pathlib import Path
 import sys
 from prompt_toolkit import print_formatted_text as print
 from prompt_toolkit import HTML
+import helpers
 
 TOKEN_CACHE_PATH = "temp/token.txt"
 CONFIG_FILE_PATH = "config/deploy.toml"
 
 class Config:
     def __init__(self):
-        self._process_config_file(CONFIG_FILE_PATH)
         token = self._retrieve_token()
         self.token = token
         self.user_headers = {"Authorization": f"Bearer {token}"}
+        self._process_config_file(CONFIG_FILE_PATH)
 
     def _process_config_file(self, path):
         with open(path, "rb") as f:
@@ -30,6 +31,14 @@ class Config:
             if not eval('self.' + value.replace('.','_')):
                 print(HTML(f"<ansired><b>ERROR</b>: property {value} missing from config file at {path}</ansired>"))
                 sys.exit(1)
+
+        workspaces = helpers.get_workspaces(self.user_headers)
+        if self.target_workspace_id not in workspaces:
+            print(HTML(f"<ansired><b>ERROR</b>: target workspace {self.target_workspace_id} not accessible</ansired>"))
+            sys.exit(1)
+        if self.source_workspace_id not in workspaces:
+            print(HTML(f"<ansired><b>ERROR</b>: source workspace {self.source_workspace_id} not accessible</ansired>"))
+            sys.exit(1)
 
     def cache_access_token_interactive(self):
         scope = ['https://analysis.windows.net/powerbi/api/.default']

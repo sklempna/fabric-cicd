@@ -65,6 +65,17 @@ def base64_encode_file(file_path):
     
 # Fabric api wrapper
 
+def get_workspaces(auth_header):
+    url = f'https://api.fabric.microsoft.com/v1/workspaces'
+    r = requests.get(url, headers=auth_header)
+    if r.status_code != 200:
+        print(HTML("<ansired><b>ERROR:</b> .</ansired>"))
+        print(r.text)
+        print(r.status_code)
+        sys.exit(1)
+    values = json.loads(r.text).get("value")
+    return [value.get("id") for value in values]
+
 def create_lakehouse(auth_header, workspace_id, item_definition):
     url = f'https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/lakehouses'
     r = requests.post(url, headers=auth_header, data=item_definition)

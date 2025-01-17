@@ -243,3 +243,4 @@ class Deployment:
         # print(payload)
         r = requests.post(url, headers=self.config.user_headers, json=payload)
         return r.status_code
+    
