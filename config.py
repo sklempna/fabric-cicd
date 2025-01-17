@@ -7,19 +7,24 @@ from pathlib import Path
 import sys
 from prompt_toolkit import print_formatted_text as print
 from prompt_toolkit import HTML
-import helpers
+from helpers.fabric import get_workspaces
 
 TOKEN_CACHE_PATH = "temp/token.txt"
 CONFIG_FILE_PATH = "config/deploy.toml"
 
 class Config:
     def __init__(self):
+        self._process_config_file(CONFIG_FILE_PATH)
         token = self._retrieve_token()
         self.token = token
         self.user_headers = {"Authorization": f"Bearer {token}"}
-        self._process_config_file(CONFIG_FILE_PATH)
+        self._validate_config()
+        
 
     def _process_config_file(self, path):
+        """
+        Reads configuration parameters from a specified .toml config file.
+        """
         with open(path, "rb") as f:
             deploy_config = tomllib.load(f)
             self.target_workspace_id = deploy_config.get("target").get("workspace_id")
@@ -32,7 +37,11 @@ class Config:
                 print(HTML(f"<ansired><b>ERROR</b>: property {value} missing from config file at {path}</ansired>"))
                 sys.exit(1)
 
-        workspaces = helpers.get_workspaces(self.user_headers)
+    def _validate_config(self):
+        """
+        Raises an error if the configuration is invalid
+        """
+        workspaces = get_workspaces(self.user_headers)
         if self.target_workspace_id not in workspaces:
             print(HTML(f"<ansired><b>ERROR</b>: target workspace {self.target_workspace_id} not accessible</ansired>"))
             sys.exit(1)
@@ -41,6 +50,9 @@ class Config:
             sys.exit(1)
 
     def cache_access_token_interactive(self):
+        """
+        Obtain an access token interactively.
+        """
         scope = ['https://analysis.windows.net/powerbi/api/.default']
         credential = InteractiveBrowserCredential(tenant_id=self.az_tenant_id)
         user_token = credential.get_token(*scope).token

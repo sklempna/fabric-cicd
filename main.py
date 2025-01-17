@@ -7,7 +7,7 @@ from pathlib import Path
 import tempfile
 import os
 import sys
-import helpers
+from helpers.general import clear_terminal
 
 from config import Config
 from deployment import Deployment
@@ -85,7 +85,7 @@ def deploy_with_repo(config, app, repo_path, is_temp=False):
     dep.run()
 
 def main():
-    helpers.clear_terminal()
+    clear_terminal()
     app = App()
     config = Config()
 

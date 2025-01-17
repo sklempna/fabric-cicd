@@ -8,7 +8,8 @@ from prompt_toolkit import HTML
 
 from config import Config
 from anytree import Node, RenderTree
-import helpers
+from helpers.fabric import get_lakehouse_id, create_lakehouse, get_lakehouse_id, delete_lakehouse
+from helpers.general import compute_md5_hash
 
 
 class Deployment:
@@ -36,8 +37,8 @@ class Deployment:
 
         TODO: do this for other lakehouses than just the z_default_lakehouse
         """
-        src_id = helpers.get_lakehouse_id(self.config.user_headers, self.config.source_workspace_id, 'z_default_lakehouse')
-        tgt_id = helpers.get_lakehouse_id(self.config.user_headers, self.config.target_workspace_id, 'z_default_lakehouse')
+        src_id = get_lakehouse_id(self.config.user_headers, self.config.source_workspace_id, 'z_default_lakehouse')
+        tgt_id = get_lakehouse_id(self.config.user_headers, self.config.target_workspace_id, 'z_default_lakehouse')
         self.mapping['lakehouse'] = {src_id : tgt_id}
         self.lakehouse_mapping_is_current = True
         
@@ -67,7 +68,7 @@ class Deployment:
     
         notebook_folders = [folder for folder in base_directory.rglob("*") if folder.is_dir() and folder.name.endswith(".Notebook")]  
         for folder in notebook_folders:
-            notebook_hash = helpers.compute_md5_hash(folder / "notebook-content.py")
+            notebook_hash = compute_md5_hash(folder / "notebook-content.py")
             with open(folder / ".platform") as f:
                 data = json.load(f).get('metadata')
                 data["hash"] = notebook_hash
@@ -135,13 +136,13 @@ class Deployment:
         for new_lh in self.diff['lakehouse']['new']:
             item_definition = self.get_lakehouse_git_definition(new_lh)
             print(f"...Creating Lakehouse {new_lh}") 
-            helpers.create_lakehouse(self.config.user_headers, self.config.target_workspace_id, item_definition)
+            create_lakehouse(self.config.user_headers, self.config.target_workspace_id, item_definition)
 
         # delete dangling lakehouses
         for del_lh in self.diff['lakehouse']['dangling']:
             print(f"...Deleting Lakehouse {del_lh}")
-            id = helpers.get_lakehouse_id(self.config.user_headers, self.config.target_workspace_id, del_lh)
-            helpers.delete_lakehouse(self.config.user_headers, self.config.target_workspace_id, id)
+            id = get_lakehouse_id(self.config.user_headers, self.config.target_workspace_id, del_lh)
+            delete_lakehouse(self.config.user_headers, self.config.target_workspace_id, id)
 
         # update the lakehouse mapping
         self._update_default_lakehouse_mapping()
