@@ -6,13 +6,13 @@ from pathlib import Path
 from prompt_toolkit import print_formatted_text as print
 from prompt_toolkit import HTML
 
-from config import Config
+from deployment.config import Config
 from anytree import Node, RenderTree
 from helpers.fabric import get_lakehouse_id, create_lakehouse, get_lakehouse_id, delete_lakehouse, create_notebook
 from helpers.general import compute_md5_hash
 
 
-class Deployment:
+class Runner:
     def __init__(self, config: Config):
         """
         Connects to the target workspace and obtains the git and workspace items.

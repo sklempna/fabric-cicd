@@ -9,8 +9,8 @@ import os
 import sys
 from helpers.general import clear_terminal
 
-from config import Config
-from deployment import Deployment
+from deployment.config import Config
+from deployment.run import Runner
 
 class App:
     def __init__(self):
@@ -77,7 +77,7 @@ def deploy_with_repo(config, app, repo_path, is_temp=False):
     else:
         print(f"...Using local repo {repo_path}")
 
-    dep = Deployment(config)
+    dep = Runner(config)
     app._run_or_exit("Run preview deployment? (Type 'yes' or 'no'): ")
     dep.compute_plan()
     dep.print_plan()
