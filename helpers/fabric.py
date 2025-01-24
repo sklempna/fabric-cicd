@@ -29,6 +29,16 @@ def create_lakehouse(auth_header, workspace_id, item_definition):
         sys.exit(1)
     return r.status_code
 
+def get_lakehouses(auth_header, workspace_id):
+    url = f'https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/lakehouses'
+    r = requests.get(url, headers=auth_header)
+    if r.status_code != 200:
+        print(HTML(f'<ansired><b>ERROR:</b>Error retrieving lakehouses</ansired>'))
+        sys.exit(1)
+    values = json.loads(r.text).get("value")
+    lhs = [item for item in values if item['type'] == 'Lakehouse']
+    return lhs
+
 def get_lakehouse_id(auth_header, workspace_id, display_name):
     url = f'https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/lakehouses'
     r = requests.get(url, headers=auth_header)
@@ -74,3 +84,4 @@ def create_notebook(auth_header, workspace_id, display_name, nb_content_b64):
         print(r.status_code)
         sys.exit(1)
     return r.status_code
+

@@ -8,7 +8,7 @@ from prompt_toolkit import HTML
 
 from deployment.config import Config
 from anytree import Node, RenderTree
-from helpers.fabric import get_lakehouse_id, create_lakehouse, get_lakehouse_id, delete_lakehouse, create_notebook
+from helpers.fabric import get_lakehouse_id, create_lakehouse, get_lakehouse_id, delete_lakehouse, create_notebook, get_lakehouses
 from helpers.general import compute_md5_hash
 
 
@@ -29,6 +29,7 @@ class Runner:
         self.lakehouse_mapping_is_current = False
         self.items_tgt = self._get_items_tgt()
         self.items_git = self._get_items_git()
+        
 
     def _update_default_lakehouse_mapping(self):
         """

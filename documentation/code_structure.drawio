@@ -1,21 +1,21 @@
-<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/131.0.0.0 Safari/537.36 Edg/131.0.0.0" version="26.0.5">
-  <diagram name="Seite-1" id="_pR5MkzJ_xU8I1aTOcs5">
-    <mxGraphModel dx="3177" dy="1289" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/132.0.0.0 Safari/537.36 Edg/132.0.0.0" version="26.0.6" pages="2">
+  <diagram name="files" id="_pR5MkzJ_xU8I1aTOcs5">
+    <mxGraphModel dx="3177" dy="1287" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
-        <mxCell id="JDO-HQRGphiNM-aZocB6-1" value="deployment" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+        <mxCell id="JDO-HQRGphiNM-aZocB6-1" value="deployment" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
           <mxGeometry x="560" y="80" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="JDO-HQRGphiNM-aZocB6-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="JDO-HQRGphiNM-aZocB6-2" target="JDO-HQRGphiNM-aZocB6-4">
+        <mxCell id="JDO-HQRGphiNM-aZocB6-12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="JDO-HQRGphiNM-aZocB6-2" target="JDO-HQRGphiNM-aZocB6-4" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="JDO-HQRGphiNM-aZocB6-13" value="has 1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="JDO-HQRGphiNM-aZocB6-12">
+        <mxCell id="JDO-HQRGphiNM-aZocB6-13" value="has 1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="JDO-HQRGphiNM-aZocB6-12" vertex="1" connectable="0">
           <mxGeometry x="0.0334" y="-1" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="JDO-HQRGphiNM-aZocB6-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" edge="1" parent="1" source="JDO-HQRGphiNM-aZocB6-2" target="JDO-HQRGphiNM-aZocB6-3">
+        <mxCell id="JDO-HQRGphiNM-aZocB6-14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0.5;entryY=1;entryDx=0;entryDy=0;" parent="1" source="JDO-HQRGphiNM-aZocB6-2" target="JDO-HQRGphiNM-aZocB6-3" edge="1">
           <mxGeometry relative="1" as="geometry">
             <Array as="points">
               <mxPoint x="420" y="380" />
@@ -23,60 +23,71 @@
             </Array>
           </mxGeometry>
         </mxCell>
-        <mxCell id="JDO-HQRGphiNM-aZocB6-15" value="has 1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="JDO-HQRGphiNM-aZocB6-14">
+        <mxCell id="JDO-HQRGphiNM-aZocB6-15" value="has 1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="JDO-HQRGphiNM-aZocB6-14" vertex="1" connectable="0">
           <mxGeometry x="0.0788" y="2" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="JDO-HQRGphiNM-aZocB6-2" value="class: Config" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+        <mxCell id="JDO-HQRGphiNM-aZocB6-2" value="class: Config" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
           <mxGeometry x="360" y="280" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="JDO-HQRGphiNM-aZocB6-3" value="class: Runner" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+        <mxCell id="JDO-HQRGphiNM-aZocB6-3" value="class: Runner" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
           <mxGeometry x="760" y="280" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="JDO-HQRGphiNM-aZocB6-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="JDO-HQRGphiNM-aZocB6-4" target="JDO-HQRGphiNM-aZocB6-3">
+        <mxCell id="JDO-HQRGphiNM-aZocB6-16" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="JDO-HQRGphiNM-aZocB6-4" target="JDO-HQRGphiNM-aZocB6-3" edge="1">
           <mxGeometry relative="1" as="geometry" />
         </mxCell>
-        <mxCell id="JDO-HQRGphiNM-aZocB6-17" value="has 1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" vertex="1" connectable="0" parent="JDO-HQRGphiNM-aZocB6-16">
+        <mxCell id="JDO-HQRGphiNM-aZocB6-17" value="has 1" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="JDO-HQRGphiNM-aZocB6-16" vertex="1" connectable="0">
           <mxGeometry x="-0.0666" y="1" relative="1" as="geometry">
             <mxPoint as="offset" />
           </mxGeometry>
         </mxCell>
-        <mxCell id="JDO-HQRGphiNM-aZocB6-4" value="class: Checker" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+        <mxCell id="JDO-HQRGphiNM-aZocB6-4" value="class: Checker" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
           <mxGeometry x="560" y="280" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="JDO-HQRGphiNM-aZocB6-7" value="responsible for authenticating, reading config file or parameters and storing parameters important for deployment" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="JDO-HQRGphiNM-aZocB6-7" value="responsible for authenticating, reading config file or parameters and storing parameters important for deployment" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="330" y="400" width="151" height="150" as="geometry" />
         </mxCell>
-        <mxCell id="JDO-HQRGphiNM-aZocB6-8" value="config.py" style="shape=card;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="JDO-HQRGphiNM-aZocB6-8" value="config.py" style="shape=card;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="330" y="220" width="60" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="JDO-HQRGphiNM-aZocB6-9" value="check.py" style="shape=card;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="JDO-HQRGphiNM-aZocB6-9" value="check.py" style="shape=card;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="530" y="220" width="60" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="JDO-HQRGphiNM-aZocB6-10" value="run.py" style="shape=card;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="JDO-HQRGphiNM-aZocB6-10" value="run.py" style="shape=card;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="740" y="220" width="60" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="JDO-HQRGphiNM-aZocB6-18" value="responsible for running checks for the deployment, e.g. checking that all the workspaces exist and that that no notebooks are connected to lakehouses outside of their workspace" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="JDO-HQRGphiNM-aZocB6-18" value="responsible for running checks for the deployment, e.g. checking that all the workspaces exist and that that no notebooks are connected to lakehouses outside of their workspace" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="560" y="400" width="151" height="150" as="geometry" />
         </mxCell>
-        <mxCell id="JDO-HQRGphiNM-aZocB6-19" value="responsible for planning and executing the deployment operations" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="JDO-HQRGphiNM-aZocB6-19" value="responsible for planning and executing the deployment operations" style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="760" y="400" width="151" height="150" as="geometry" />
         </mxCell>
-        <mxCell id="JDO-HQRGphiNM-aZocB6-20" value="deployment" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+        <mxCell id="JDO-HQRGphiNM-aZocB6-20" value="helpers" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" parent="1" vertex="1">
           <mxGeometry x="-200" y="80" width="120" height="80" as="geometry" />
         </mxCell>
-        <mxCell id="JDO-HQRGphiNM-aZocB6-23" value="general.py" style="shape=card;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="JDO-HQRGphiNM-aZocB6-23" value="general.py" style="shape=card;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-270" y="290" width="60" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="JDO-HQRGphiNM-aZocB6-24" value="fabric.py" style="shape=card;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+        <mxCell id="JDO-HQRGphiNM-aZocB6-24" value="fabric.py" style="shape=card;whiteSpace=wrap;html=1;" parent="1" vertex="1">
           <mxGeometry x="-70" y="290" width="60" height="70" as="geometry" />
         </mxCell>
-        <mxCell id="JDO-HQRGphiNM-aZocB6-25" value="contains various helper functions." style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="JDO-HQRGphiNM-aZocB6-25" value="contains various helper functions." style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="-315.5" y="400" width="151" height="150" as="geometry" />
         </mxCell>
-        <mxCell id="JDO-HQRGphiNM-aZocB6-26" value="contains an api wrapper for the fabric api." style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" vertex="1" parent="1">
+        <mxCell id="JDO-HQRGphiNM-aZocB6-26" value="contains an api wrapper for the fabric api." style="text;html=1;align=left;verticalAlign=top;whiteSpace=wrap;rounded=0;" parent="1" vertex="1">
           <mxGeometry x="-115.5" y="400" width="151" height="150" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+  <diagram id="7M1cwQ-bANpe0llJexEk" name="Seite-2">
+    <mxGraphModel dx="3177" dy="1287" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="Jj1cDy43EUXckDegivRF-1" value="Config" style="shape=hexagon;perimeter=hexagonPerimeter2;whiteSpace=wrap;html=1;fixedSize=1;" vertex="1" parent="1">
+          <mxGeometry x="-10" y="200" width="120" height="80" as="geometry" />
         </mxCell>
       </root>
     </mxGraphModel>
