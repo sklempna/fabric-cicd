@@ -85,3 +85,15 @@ def create_notebook(auth_header, workspace_id, display_name, nb_content_b64):
         sys.exit(1)
     return r.status_code
 
+
+def delete_notebook(auth_header, workspace_id, notebook_id):
+    url = f'https://api.fabric.microsoft.com/v1/workspaces/{workspace_id}/notebooks/{notebook_id}'
+
+    r = requests.delete(url, headers=auth_header)
+    if r.status_code != 200:
+        print(HTML(f"<ansired><b>ERROR:</b> could not delete notebook with id {notebook_id}.</ansired>"))
+        print(r.text)
+        print(r.status_code)
+        sys.exit(1)
+    return r.status_code
+

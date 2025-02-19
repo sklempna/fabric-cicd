@@ -8,7 +8,7 @@ from prompt_toolkit import HTML
 
 from deployment.config import Config
 from anytree import Node, RenderTree
-from helpers.fabric import get_lakehouse_id, create_lakehouse, get_lakehouse_id, delete_lakehouse, create_notebook, get_lakehouses
+from helpers.fabric import get_lakehouse_id, create_lakehouse, get_lakehouse_id, delete_lakehouse, create_notebook, get_lakehouses, delete_notebook
 from helpers.general import compute_md5_hash
 
 
@@ -153,6 +153,14 @@ class Runner:
             print(f"...Creating Notebook {new_nb}")
             self.create_notebook_from_local_repo(new_nb, self.config.repo_local_path / (new_nb + '.Notebook'))
 
+        # TODO: update existing notebooks
+
+        # TODO: delete dangling notebooks
+        for del_nb in self.diff['notebook']['dangling']:
+            print(f"...Deleting Notebook {del_nb}")
+            notebook_id = self.get_target_notebook_by_name(del_nb).get('id')
+            delete_notebook(self.config.user_headers, self.config.target_workspace_id, notebook_id)
+
         print("...All done.")
     
     def _get_diff(self):
@@ -201,6 +209,17 @@ class Runner:
         # TODO: notebooks should only be connected to lakehouses in their own workspace.
 
         print("...All source checks passed.")
+
+    def get_target_notebook_by_name(self, display_name):
+        """
+            Gets the notebook item description in the target workspace by notebook display name
+        """
+        target_nbs = [item for item in self.items_tgt if item.get('type') == 'Notebook' and item.get('displayName') == display_name]
+        if len(target_nbs) != 1:
+            raise ValueError(f"Error retrieving notebook {display_name} from target workspace items")
+            return
+        else:
+            return target_nbs[0]
 
     def create_notebook_from_local_repo(self, display_name, folder_path: Path):
         if not self.lakehouse_mapping_is_current:
